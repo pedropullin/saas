@@ -1,0 +1,107 @@
+@import "tailwindcss";
+
+/* ------------------------------------------------------------------ */
+/* VEYRO design tokens                                                 */
+/* Preto profundo / branco / off-white / cinza neutro + 1 accent lima  */
+/* ------------------------------------------------------------------ */
+@theme {
+  /* color */
+  --color-ink: #0a0a09;
+  --color-ink-soft: #17170f;
+  --color-paper: #ffffff;
+  --color-off-white: #f5f4ef;
+  --color-neutral-100: #ececE5;
+  --color-neutral-200: #e0dfd7;
+  --color-neutral-300: #cccbc0;
+  --color-neutral-400: #a8a79b;
+  --color-neutral-500: #86857a;
+  --color-neutral-600: #5f5e54;
+  --color-neutral-700: #403f38;
+  --color-neutral-800: #262620;
+  --color-accent: #c6f13a;
+  --color-accent-dim: #a3c92c;
+  --color-accent-ink: #10230a;
+
+  /* typography */
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+
+  --text-display: clamp(2.75rem, 3.2vw + 2rem, 6.25rem);
+  --text-display--line-height: 0.98;
+  --text-display--letter-spacing: -0.03em;
+  --text-h1: clamp(2.25rem, 2vw + 1.75rem, 4rem);
+  --text-h1--line-height: 1.04;
+  --text-h1--letter-spacing: -0.025em;
+  --text-h2: clamp(1.75rem, 1.1vw + 1.4rem, 2.75rem);
+  --text-h2--line-height: 1.1;
+  --text-h2--letter-spacing: -0.02em;
+  --text-h3: 1.375rem;
+  --text-h3--line-height: 1.25;
+  --text-h3--letter-spacing: -0.01em;
+  --text-body-lg: 1.125rem;
+  --text-body-lg--line-height: 1.6;
+  --text-body: 1rem;
+  --text-body--line-height: 1.6;
+  --text-caption: 0.8125rem;
+  --text-caption--line-height: 1.4;
+  --text-label: 0.75rem;
+  --text-label--line-height: 1.2;
+  --text-label--letter-spacing: 0.08em;
+
+  /* radius / shadow */
+  --radius-xs: 3px;
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --shadow-subtle: 0 1px 2px rgba(10, 10, 9, 0.04), 0 6px 16px rgba(10, 10, 9, 0.04);
+  --shadow-lifted: 0 2px 4px rgba(10, 10, 9, 0.06), 0 16px 32px rgba(10, 10, 9, 0.08);
+
+  /* container */
+  --container-page: 1360px;
+}
+
+/* Tailwind 4 auto-detects content; this is a static-export capable app so
+   no extra content globs are required. */
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  background: var(--color-off-white);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: var(--color-accent);
+  color: var(--color-accent-ink);
+}
+
+/* Focus ring: visible, on-brand, never removed for a11y */
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Custom cursor: only enabled on marketing pages with pointer:fine */
+@media (pointer: fine) {
+  [data-cursor-zone] {
+    cursor: none;
+  }
+}
