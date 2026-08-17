@@ -1,11 +1,10 @@
 import type { NavLink } from "./types";
 
 export const MARKETING_NAV: NavLink[] = [
-  { label: "Produto", href: "#produto" },
-  { label: "Como funciona", href: "#como-funciona" },
-  { label: "Recursos", href: "#recursos" },
+  { label: "Product", href: "#product" },
+  { label: "How it works", href: "#how-it-works" },
   { label: "Designers", href: "#designers" },
-  { label: "Preços", href: "#precos" },
+  { label: "Pricing", href: "#pricing" },
 ];
 
 export const PRODUCT_NAV: { label: string; href: string; icon: string }[] = [

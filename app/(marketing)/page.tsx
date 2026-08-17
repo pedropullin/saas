@@ -1,28 +1,32 @@
-import { Hero } from "@/components/sections/Hero";
-import { ProcessSteps } from "@/components/sections/ProcessSteps";
-import { LiveDemo } from "@/components/sections/LiveDemo";
-import { BrandBoardShowcase } from "@/components/sections/BrandBoardShowcase";
-import { ProductPreview } from "@/components/sections/ProductPreview";
-import { DesignersPreview } from "@/components/sections/DesignersPreview";
-import { Benefits } from "@/components/sections/Benefits";
-import { PricingTeaser } from "@/components/sections/PricingTeaser";
-import { Manifesto } from "@/components/sections/Manifesto";
-import { BeforeAfter } from "@/components/sections/BeforeAfter";
-import { FinalCta } from "@/components/sections/FinalCta";
+import { Hero } from "@/components/landing/Hero";
+import { FlowSection } from "@/components/landing/FlowSection";
+import { BuildSection } from "@/components/landing/BuildSection";
+import { AISection } from "@/components/landing/AISection";
+import { DesignerSection } from "@/components/landing/DesignerSection";
+import { BrandShowcase } from "@/components/landing/BrandShowcase";
+import { ProcessSection } from "@/components/landing/ProcessSection";
+import { Pricing } from "@/components/landing/Pricing";
+import { FinalCta } from "@/components/landing/FinalCta";
 
 export default function Home() {
   return (
     <>
+      {/* 1 — Build your identity. */}
       <Hero />
-      <ProcessSteps />
-      <LiveDemo />
-      <BrandBoardShowcase />
-      <ProductPreview />
-      <DesignersPreview />
-      <Benefits />
-      <PricingTeaser />
-      <Manifesto />
-      <BeforeAfter />
+      {/* 2 — Uma identidade. Em minutos. */}
+      <FlowSection />
+      {/* 3 — the identity assembling on scroll */}
+      <BuildSection />
+      {/* 4 — AI + Human */}
+      <AISection />
+      {/* the human half, with names */}
+      <DesignerSection />
+      {/* 5 — the system applied */}
+      <BrandShowcase />
+      {/* 6 — 01 Briefing → 04 Final Brand */}
+      <ProcessSection />
+      <Pricing />
+      {/* 7 — Your brand starts here. */}
       <FinalCta />
     </>
   );

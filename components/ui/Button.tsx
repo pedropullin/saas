@@ -1,8 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { motion, useMotionValue, useSpring } from "framer-motion";
-import type { PointerEvent, ReactNode } from "react";
+import { motion } from "framer-motion";
+import type { ReactNode } from "react";
+import { useMagnetic } from "@/hooks/useMagnetic";
 import { cn } from "@/lib/utils";
 import { EASE_EDITORIAL } from "@/lib/motion/easing";
 
@@ -54,32 +55,10 @@ type ButtonProps = ButtonAsButton | ButtonAsLink;
 const base =
   "inline-flex items-center justify-center gap-2 rounded-[3px] font-medium tracking-[-0.01em] transition-colors duration-200";
 
-/** Pointer-attraction: the whole button drifts a few px toward the cursor while hovered. */
-function useMagnetic(strength = 12) {
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
-  const springX = useSpring(x, { stiffness: 220, damping: 16, mass: 0.3 });
-  const springY = useSpring(y, { stiffness: 220, damping: 16, mass: 0.3 });
-
-  const onPointerMove = (event: PointerEvent<HTMLElement>) => {
-    const rect = event.currentTarget.getBoundingClientRect();
-    const relX = event.clientX - (rect.left + rect.width / 2);
-    const relY = event.clientY - (rect.top + rect.height / 2);
-    x.set((relX / (rect.width / 2)) * strength);
-    y.set((relY / (rect.height / 2)) * strength);
-  };
-  const onPointerLeave = () => {
-    x.set(0);
-    y.set(0);
-  };
-
-  return { x: springX, y: springY, onPointerMove, onPointerLeave };
-}
-
 export function Button(props: ButtonProps) {
   const { variant = "primary", size = "md", className, children, magnetic = false } = props;
   const classes = cn(base, VARIANT_CLASS[variant], SIZE_CLASS[size], className);
-  const magneticProps = useMagnetic();
+  const magneticProps = useMagnetic(12);
 
   const motionProps = magnetic
     ? {

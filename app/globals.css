@@ -26,6 +26,9 @@
   --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, monospace;
 
+  --text-hero: clamp(3rem, 9.5vw, 8.5rem);
+  --text-hero--line-height: 0.9;
+  --text-hero--letter-spacing: -0.045em;
   --text-display: clamp(2.75rem, 3.2vw + 2rem, 6.25rem);
   --text-display--line-height: 0.98;
   --text-display--letter-spacing: -0.03em;
@@ -47,6 +50,9 @@
   --text-label: 0.75rem;
   --text-label--line-height: 1.2;
   --text-label--letter-spacing: 0.08em;
+
+  /* motion — one curve for the entire site */
+  --ease-editorial: cubic-bezier(0.22, 1, 0.36, 1);
 
   /* radius / shadow */
   --radius-xs: 3px;
@@ -78,6 +84,10 @@ body {
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+  /* `clip` rather than `hidden`: kills any horizontal overflow from
+     decorative/parallax elements without turning the body into a scroll
+     container (which would break every `position: sticky` section). */
+  overflow-x: clip;
 }
 
 ::selection {
@@ -132,4 +142,68 @@ body {
 .glow-card > * {
   position: relative;
   z-index: 1;
+}
+
+/* ------------------------------------------------------------------ */
+/* Landing utilities                                                    */
+/* ------------------------------------------------------------------ */
+
+/* Hairline blueprint grid — reads as drafting paper behind hero/canvas
+   sections. Two 1px gradients, no image request, no repaint cost. */
+.blueprint-grid {
+  background-image:
+    linear-gradient(to right, color-mix(in srgb, var(--color-ink) 5%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in srgb, var(--color-ink) 5%, transparent) 1px, transparent 1px);
+  background-size: 72px 72px;
+}
+.blueprint-grid-invert {
+  background-image:
+    linear-gradient(to right, color-mix(in srgb, var(--color-paper) 6%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in srgb, var(--color-paper) 6%, transparent) 1px, transparent 1px);
+  background-size: 72px 72px;
+}
+
+/* Fades a grid/blueprint out at its edges so it never collides with copy. */
+.mask-radial-fade {
+  -webkit-mask-image: radial-gradient(ellipse 75% 65% at 50% 45%, #000 30%, transparent 100%);
+  mask-image: radial-gradient(ellipse 75% 65% at 50% 45%, #000 30%, transparent 100%);
+}
+.mask-fade-b {
+  -webkit-mask-image: linear-gradient(to bottom, #000 60%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 60%, transparent 100%);
+}
+
+/* 3D context for the hero product window and card tilts. */
+.perspective-1200 {
+  perspective: 1200px;
+  perspective-origin: 50% 20%;
+}
+
+/* Line-by-line text reveal: each line clips its own rising span. */
+.reveal-line {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.08em;
+  margin-bottom: -0.08em;
+}
+
+/* Underline that grows from the left on hover — used by nav + text links. */
+.link-underline {
+  position: relative;
+}
+.link-underline::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -3px;
+  height: 1px;
+  width: 100%;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.45s var(--ease-editorial);
+}
+.link-underline:hover::after,
+.link-underline:focus-visible::after {
+  transform: scaleX(1);
 }
