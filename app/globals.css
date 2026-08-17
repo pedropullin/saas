@@ -57,6 +57,37 @@
 
   /* container */
   --container-page: 1360px;
+
+  /* -------------------------------------------------------------- */
+  /* AFAGO design tokens                                              */
+  /* Carvão quente / creme / terracota / dourado — petiscaria noturna */
+  /* Scoped to the Afago site only; VEYRO tokens above are untouched. */
+  /* -------------------------------------------------------------- */
+  --color-afago-void: #0b0908;
+  --color-afago-char: #14100d;
+  --color-afago-char-soft: #1d1712;
+  --color-afago-line: #ffffff1a;
+  --color-afago-cream: #f4ecdf;
+  --color-afago-cream-dim: #d9cdb8;
+  --color-afago-stone: #948a78;
+  --color-afago-terracotta: #c1592b;
+  --color-afago-terracotta-soft: #e07a45;
+  --color-afago-gold: #cda45e;
+  --color-afago-gold-soft: #e8c98b;
+
+  --font-serif: var(--font-fraunces), ui-serif, Georgia, "Times New Roman", serif;
+
+  --text-afago-display: clamp(3.2rem, 5vw + 2rem, 8.5rem);
+  --text-afago-display--line-height: 0.94;
+  --text-afago-display--letter-spacing: -0.01em;
+  --text-afago-h1: clamp(2.5rem, 2.6vw + 1.6rem, 4.75rem);
+  --text-afago-h1--line-height: 1.02;
+  --text-afago-h1--letter-spacing: -0.01em;
+  --text-afago-h2: clamp(1.9rem, 1.6vw + 1.3rem, 3.1rem);
+  --text-afago-h2--line-height: 1.08;
+  --text-afago-eyebrow: 0.75rem;
+  --text-afago-eyebrow--line-height: 1.2;
+  --text-afago-eyebrow--letter-spacing: 0.28em;
 }
 
 /* Tailwind 4 auto-detects content; this is a static-export capable app so
@@ -132,4 +163,53 @@ body {
 .glow-card > * {
   position: relative;
   z-index: 1;
+}
+
+/* ------------------------------------------------------------------ */
+/* AFAGO scope — everything below only applies inside .afago-root      */
+/* ------------------------------------------------------------------ */
+.afago-root {
+  background: var(--color-afago-void);
+  color: var(--color-afago-cream);
+}
+.afago-root ::selection {
+  background: var(--color-afago-terracotta);
+  color: var(--color-afago-cream);
+}
+
+/* Subtle film-grain overlay, layered on dark photographic/placeholder
+   blocks so flat gradients read as intentional texture, not a flat div. */
+.afago-grain {
+  position: relative;
+  isolation: isolate;
+}
+.afago-grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0.5;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.35'/></svg>");
+  background-size: 160px 160px;
+}
+
+.afago-root .no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Horizontal snap track used by the mobile fallback of pinned sections. */
+.afago-snap-x {
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+.afago-snap-item {
+  scroll-snap-align: center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .afago-grain::after {
+    display: none;
+  }
 }
