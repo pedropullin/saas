@@ -1,29 +1,35 @@
-import { Hero } from "@/components/sections/Hero";
-import { ProcessSteps } from "@/components/sections/ProcessSteps";
-import { LiveDemo } from "@/components/sections/LiveDemo";
-import { BrandBoardShowcase } from "@/components/sections/BrandBoardShowcase";
-import { ProductPreview } from "@/components/sections/ProductPreview";
-import { DesignersPreview } from "@/components/sections/DesignersPreview";
-import { Benefits } from "@/components/sections/Benefits";
-import { PricingTeaser } from "@/components/sections/PricingTeaser";
-import { Manifesto } from "@/components/sections/Manifesto";
-import { BeforeAfter } from "@/components/sections/BeforeAfter";
-import { FinalCta } from "@/components/sections/FinalCta";
+import { CinematicHero } from "@/components/experience/CinematicHero";
+import { BrandGenesis } from "@/components/experience/BrandGenesis";
+import { TransformGate } from "@/components/experience/TransformGate";
+import { DashboardReveal } from "@/components/experience/DashboardReveal";
+import { SplitBriefingIdentity } from "@/components/experience/SplitBriefingIdentity";
+import { BrandBoardEditorial } from "@/components/experience/BrandBoardEditorial";
+import { VSymbolSystem } from "@/components/experience/VSymbolSystem";
+import { TypographyWords } from "@/components/experience/TypographyWords";
+import { ApplicationsOrbit } from "@/components/experience/ApplicationsOrbit";
+import { MobileInteractive } from "@/components/experience/MobileInteractive";
+import { AIDesignerFlow } from "@/components/experience/AIDesignerFlow";
+import { DesignerMarketplace } from "@/components/experience/DesignerMarketplace";
+import { FinalCycle } from "@/components/experience/FinalCycle";
 
 export default function Home() {
   return (
     <>
-      <Hero />
-      <ProcessSteps />
-      <LiveDemo />
-      <BrandBoardShowcase />
-      <ProductPreview />
-      <DesignersPreview />
-      <Benefits />
-      <PricingTeaser />
-      <Manifesto />
-      <BeforeAfter />
-      <FinalCta />
+      <CinematicHero />
+      <BrandGenesis />
+      <TransformGate label="Entrando no produto." tone="accent" />
+      <DashboardReveal />
+      <SplitBriefingIdentity />
+      <BrandBoardEditorial />
+      <VSymbolSystem />
+      <TypographyWords />
+      <TransformGate label="A marca em aplicação." tone="ink" />
+      <ApplicationsOrbit />
+      <MobileInteractive />
+      <AIDesignerFlow />
+      <TransformGate label="Designers reais." tone="paper" />
+      <DesignerMarketplace />
+      <FinalCycle />
     </>
   );
 }

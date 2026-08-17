@@ -2,11 +2,13 @@ import type { Metadata } from "next";
 import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
 import { MotionConfig } from "framer-motion";
+import { TransitionProvider } from "@/components/providers/TransitionProvider";
+import { LoadingIntro } from "@/components/experience/LoadingIntro";
 import "./globals.css";
 
 export const metadata: Metadata = {
   title: {
-    default: "veyro — Crie marcas extraordinárias com inteligência.",
+    default: "veyro — A próxima geração de criação de marcas.",
     template: "%s — veyro",
   },
   description:
@@ -22,7 +24,12 @@ export default function RootLayout({
   return (
     <html lang="pt-BR" className={`${GeistSans.variable} ${GeistMono.variable}`}>
       <body>
-        <MotionConfig reducedMotion="user">{children}</MotionConfig>
+        <MotionConfig reducedMotion="user">
+          <TransitionProvider>
+            <LoadingIntro />
+            {children}
+          </TransitionProvider>
+        </MotionConfig>
       </body>
     </html>
   );
