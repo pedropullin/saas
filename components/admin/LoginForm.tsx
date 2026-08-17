@@ -4,7 +4,12 @@ import { useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { verifyAdminCredentials, setAdminSession } from "@/lib/auth/admin-session";
+import { Input } from "@/components/ui/Input";
+import { Label } from "@/components/ui/Label";
 import { EASE_EDITORIAL } from "@/lib/motion/easing";
+
+const darkFieldClass =
+  "border-off-white/15 text-off-white placeholder:text-off-white/30 focus:border-accent";
 
 export function LoginForm() {
   const router = useRouter();
@@ -26,29 +31,29 @@ export function LoginForm() {
     <form onSubmit={handleSubmit} className="w-full max-w-sm">
       <div className="space-y-5">
         <div>
-          <label htmlFor="username" className="mb-2 block text-[0.75rem] font-medium uppercase tracking-[0.06em] text-off-white/50">
+          <Label htmlFor="username" className="text-off-white/50">
             Email ou usuário
-          </label>
-          <input
+          </Label>
+          <Input
             id="username"
             autoComplete="username"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
-            className="w-full rounded-[4px] border border-off-white/15 bg-transparent px-4 py-3 text-[0.9375rem] text-off-white outline-none transition-colors placeholder:text-off-white/30 focus:border-accent"
+            className={darkFieldClass}
             placeholder="peeale12"
           />
         </div>
         <div>
-          <label htmlFor="password" className="mb-2 block text-[0.75rem] font-medium uppercase tracking-[0.06em] text-off-white/50">
+          <Label htmlFor="password" className="text-off-white/50">
             Senha
-          </label>
-          <input
+          </Label>
+          <Input
             id="password"
             type="password"
             autoComplete="current-password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="w-full rounded-[4px] border border-off-white/15 bg-transparent px-4 py-3 text-[0.9375rem] text-off-white outline-none transition-colors placeholder:text-off-white/30 focus:border-accent"
+            className={darkFieldClass}
             placeholder="••••••••"
           />
         </div>

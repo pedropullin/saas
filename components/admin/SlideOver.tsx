@@ -1,12 +1,12 @@
 "use client";
 
-import { AnimatePresence, motion } from "framer-motion";
 import type { ReactNode } from "react";
-import { EASE_EDITORIAL } from "@/lib/motion/easing";
+import { Sheet, SheetContent } from "@/components/ui/Sheet";
 
 /**
  * Lateral reveal used across the admin for row detail — deliberately not a
- * centered modal. Content slides in from the right over a dim scrim.
+ * centered modal. Thin VEYRO wrapper over shadcn/ui's Sheet (Radix Dialog)
+ * so call sites keep the simple open/onClose API.
  */
 export function SlideOver({
   open,
@@ -18,28 +18,10 @@ export function SlideOver({
   children: ReactNode;
 }) {
   return (
-    <AnimatePresence>
-      {open && (
-        <>
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.25 }}
-            onClick={onClose}
-            className="fixed inset-0 z-40 bg-ink/40 backdrop-blur-[2px]"
-          />
-          <motion.div
-            initial={{ x: "100%" }}
-            animate={{ x: 0 }}
-            exit={{ x: "100%" }}
-            transition={{ duration: 0.45, ease: EASE_EDITORIAL }}
-            className="fixed inset-y-0 right-0 z-50 w-full max-w-md overflow-y-auto border-l border-ink/10 bg-paper shadow-lifted"
-          >
-            {children}
-          </motion.div>
-        </>
-      )}
-    </AnimatePresence>
+    <Sheet open={open} onOpenChange={(next) => !next && onClose()}>
+      <SheetContent side="right" className="overflow-y-auto p-0" hideClose>
+        {children}
+      </SheetContent>
+    </Sheet>
   );
 }

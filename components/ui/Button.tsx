@@ -2,29 +2,41 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { cva, type VariantProps } from "class-variance-authority";
 import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 import { EASE_EDITORIAL } from "@/lib/motion/easing";
 
-type Variant = "primary" | "secondary" | "ghost";
-type Size = "sm" | "md" | "lg";
+/**
+ * shadcn/ui-style variant map — VEYRO's palette (ink / off-white / accent)
+ * in place of the default shadcn slate theme.
+ */
+export const buttonVariants = cva(
+  "inline-flex items-center justify-center gap-2 rounded-[3px] font-medium tracking-[-0.01em] transition-colors duration-200 disabled:pointer-events-none disabled:opacity-50",
+  {
+    variants: {
+      variant: {
+        primary: "bg-ink text-off-white hover:bg-accent hover:text-accent-ink",
+        secondary:
+          "border border-ink/15 bg-transparent text-ink hover:border-ink hover:bg-ink hover:text-off-white",
+        ghost: "text-ink hover:text-accent-dim",
+      },
+      size: {
+        sm: "px-4 py-2 text-[0.8125rem]",
+        md: "px-6 py-3.5 text-[0.9375rem]",
+        lg: "px-8 py-4 text-base",
+      },
+    },
+    defaultVariants: {
+      variant: "primary",
+      size: "md",
+    },
+  }
+);
 
-const VARIANT_CLASS: Record<Variant, string> = {
-  primary: "bg-ink text-off-white hover:bg-accent hover:text-accent-ink",
-  secondary:
-    "border border-ink/15 text-ink bg-transparent hover:border-ink hover:bg-ink hover:text-off-white",
-  ghost: "text-ink hover:text-accent-dim",
-};
+type ButtonVariants = VariantProps<typeof buttonVariants>;
 
-const SIZE_CLASS: Record<Size, string> = {
-  sm: "px-4 py-2 text-[0.8125rem]",
-  md: "px-6 py-3.5 text-[0.9375rem]",
-  lg: "px-8 py-4 text-base",
-};
-
-interface BaseProps {
-  variant?: Variant;
-  size?: Size;
+interface BaseProps extends ButtonVariants {
   className?: string;
   children: ReactNode;
 }
@@ -49,12 +61,8 @@ interface ButtonAsLink extends BaseProps {
 
 type ButtonProps = ButtonAsButton | ButtonAsLink;
 
-const base =
-  "inline-flex items-center justify-center gap-2 rounded-[3px] font-medium tracking-[-0.01em] transition-colors duration-200";
-
 export function Button(props: ButtonProps) {
-  const { variant = "primary", size = "md", className, children } = props;
-  const classes = cn(base, VARIANT_CLASS[variant], SIZE_CLASS[size], className);
+  const { variant, size, className, children } = props;
 
   const motionProps = {
     whileHover: { y: -2 },
@@ -72,7 +80,7 @@ export function Button(props: ButtonProps) {
           rel={rel}
           data-cursor={props["data-cursor"]}
           data-cursor-label={props["data-cursor-label"]}
-          className={cn(base, VARIANT_CLASS[variant], SIZE_CLASS[size], "w-full")}
+          className={cn(buttonVariants({ variant, size }), "w-full")}
         >
           {children}
         </Link>
@@ -92,7 +100,7 @@ export function Button(props: ButtonProps) {
       aria-pressed={buttonProps["aria-pressed"]}
       data-cursor={buttonProps["data-cursor"]}
       data-cursor-label={buttonProps["data-cursor-label"]}
-      className={classes}
+      className={cn(buttonVariants({ variant, size }), className)}
     >
       {children}
     </motion.button>

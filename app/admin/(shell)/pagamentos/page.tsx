@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { users } from "@/lib/mock/users";
 import { Reveal } from "@/components/motion/Reveal";
 import { Badge } from "@/components/ui/Badge";
-import { Table, TableHead, TableHeadCell, TableBody, TableRow, TableCell } from "@/components/ui/Table";
+import { Table, TableHeader, TableHead, TableBody, TableRow, TableCell } from "@/components/ui/Table";
 import { formatCurrency, formatDate } from "@/lib/utils";
 
 export const metadata: Metadata = { title: "Pagamentos — Admin" };
@@ -33,12 +33,12 @@ export default function AdminPagamentosPage() {
 
       <Reveal delay={0.08} className="mt-8">
         <Table>
-          <TableHead>
-            <TableHeadCell>Usuário</TableHeadCell>
-            <TableHeadCell>Valor</TableHeadCell>
-            <TableHeadCell>Data</TableHeadCell>
-            <TableHeadCell>Status</TableHeadCell>
-          </TableHead>
+          <TableHeader>
+            <TableHead>Usuário</TableHead>
+            <TableHead>Valor</TableHead>
+            <TableHead>Data</TableHead>
+            <TableHead>Status</TableHead>
+          </TableHeader>
           <TableBody>
             {payments.map((payment) => (
               <TableRow key={payment.id}>

@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "tw-animate-css";
 
 /* ------------------------------------------------------------------ */
 /* VEYRO design tokens                                                 */
@@ -105,3 +106,21 @@ body {
     cursor: none;
   }
 }
+
+/* ShimmerCta: a single restrained light sweep, mostly idle — never a
+   continuous glow/shine loop. */
+@keyframes shimmer-sweep {
+  0%,
+  60% {
+    transform: translateX(-20%);
+    opacity: 0;
+  }
+  72% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(420%);
+    opacity: 0;
+  }
+}
+

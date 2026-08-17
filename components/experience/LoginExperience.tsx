@@ -6,7 +6,12 @@ import { motion } from "framer-motion";
 import { VMark } from "@/components/ui/VMark";
 import { Wordmark } from "@/components/ui/Wordmark";
 import { Magnetic } from "@/components/ui/Magnetic";
+import { Input } from "@/components/ui/Input";
+import { Label } from "@/components/ui/Label";
 import { EASE_EDITORIAL } from "@/lib/motion/easing";
+
+const darkFieldClass =
+  "border-off-white/15 text-off-white placeholder:text-off-white/30 focus:border-accent";
 
 export function LoginExperience() {
   const router = useRouter();
@@ -48,13 +53,10 @@ export function LoginExperience() {
         <form onSubmit={handleSubmit} className="mt-10 w-full text-left">
           <div className="space-y-5">
             <div>
-              <label
-                htmlFor="email"
-                className="mb-2 block text-[0.75rem] font-medium uppercase tracking-[0.06em] text-off-white/50"
-              >
+              <Label htmlFor="email" className="text-off-white/50">
                 Email
-              </label>
-              <input
+              </Label>
+              <Input
                 id="email"
                 type="email"
                 autoComplete="email"
@@ -63,17 +65,14 @@ export function LoginExperience() {
                 onFocus={() => setFocused(true)}
                 onBlur={() => setFocused(false)}
                 placeholder="voce@marca.com"
-                className="w-full rounded-[4px] border border-off-white/15 bg-transparent px-4 py-3 text-[0.9375rem] text-off-white outline-none transition-colors placeholder:text-off-white/30 focus:border-accent"
+                className={darkFieldClass}
               />
             </div>
             <div>
-              <label
-                htmlFor="password"
-                className="mb-2 block text-[0.75rem] font-medium uppercase tracking-[0.06em] text-off-white/50"
-              >
+              <Label htmlFor="password" className="text-off-white/50">
                 Senha
-              </label>
-              <input
+              </Label>
+              <Input
                 id="password"
                 type="password"
                 autoComplete="current-password"
@@ -82,7 +81,7 @@ export function LoginExperience() {
                 onFocus={() => setFocused(true)}
                 onBlur={() => setFocused(false)}
                 placeholder="••••••••"
-                className="w-full rounded-[4px] border border-off-white/15 bg-transparent px-4 py-3 text-[0.9375rem] text-off-white outline-none transition-colors placeholder:text-off-white/30 focus:border-accent"
+                className={darkFieldClass}
               />
             </div>
           </div>

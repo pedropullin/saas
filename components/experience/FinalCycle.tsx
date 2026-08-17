@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { VMark } from "@/components/ui/VMark";
 import { Magnetic } from "@/components/ui/Magnetic";
+import { ShimmerCta } from "@/components/ui/ShimmerCta";
 import { TransitionLink } from "@/components/providers/TransitionLink";
 import { ClosingBar } from "./ClosingBar";
 
@@ -68,13 +69,15 @@ export function FinalCycle() {
           className="relative mt-10"
         >
           <Magnetic>
-            <TransitionLink
-              href="/app/criar"
-              data-cursor="v"
-              className="inline-flex items-center justify-center rounded-[3px] bg-accent px-10 py-4 text-[0.9375rem] font-medium text-accent-ink transition-transform hover:scale-[1.02]"
-            >
-              Começar agora
-            </TransitionLink>
+            <ShimmerCta>
+              <TransitionLink
+                href="/app/criar"
+                data-cursor="v"
+                className="inline-flex items-center justify-center rounded-[3px] bg-accent px-10 py-4 text-[0.9375rem] font-medium text-accent-ink transition-transform hover:scale-[1.02]"
+              >
+                Começar agora
+              </TransitionLink>
+            </ShimmerCta>
           </Magnetic>
         </motion.div>
       </div>

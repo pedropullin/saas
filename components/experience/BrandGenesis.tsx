@@ -4,9 +4,14 @@ import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { VMark } from "@/components/ui/VMark";
 import { Magnetic } from "@/components/ui/Magnetic";
+import { Input } from "@/components/ui/Input";
+import { Label } from "@/components/ui/Label";
 import { TransitionLink } from "@/components/providers/TransitionLink";
 import { EASE_EDITORIAL } from "@/lib/motion/easing";
 import { cn } from "@/lib/utils";
+
+const editorialFieldClass =
+  "h-auto rounded-none border-0 border-b border-off-white/20 bg-transparent px-0 pb-2 text-xl font-medium text-off-white focus:border-accent";
 
 const PERSONALITY_OPTIONS = ["Minimalista", "Sofisticada", "Contemporânea", "Ousada", "Calorosa", "Técnica"];
 
@@ -95,28 +100,30 @@ export function BrandGenesis() {
               className="w-full rounded-md border border-off-white/12 bg-off-white/[0.03] p-8 text-left backdrop-blur-sm"
             >
               <div className="grid gap-6 sm:grid-cols-2">
-                <label className="block">
-                  <span className="text-[0.6875rem] font-medium uppercase tracking-[0.08em] text-off-white/40">
+                <div>
+                  <Label htmlFor="brand-name" className="text-off-white/40">
                     Nome
-                  </span>
-                  <input
+                  </Label>
+                  <Input
+                    id="brand-name"
                     value={brandName}
                     onChange={(e) => setBrandName(e.target.value)}
                     maxLength={18}
-                    className="mt-2 w-full border-b border-off-white/20 bg-transparent pb-2 text-xl font-medium text-off-white outline-none transition-colors focus:border-accent"
+                    className={editorialFieldClass}
                   />
-                </label>
-                <label className="block">
-                  <span className="text-[0.6875rem] font-medium uppercase tracking-[0.08em] text-off-white/40">
+                </div>
+                <div>
+                  <Label htmlFor="brand-segment" className="text-off-white/40">
                     Segmento
-                  </span>
-                  <input
+                  </Label>
+                  <Input
+                    id="brand-segment"
                     value={segment}
                     onChange={(e) => setSegment(e.target.value)}
                     maxLength={24}
-                    className="mt-2 w-full border-b border-off-white/20 bg-transparent pb-2 text-xl font-medium text-off-white outline-none transition-colors focus:border-accent"
+                    className={editorialFieldClass}
                   />
-                </label>
+                </div>
               </div>
 
               <div className="mt-7">

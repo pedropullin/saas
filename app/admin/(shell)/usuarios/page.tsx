@@ -7,7 +7,7 @@ import { FilterBar } from "@/components/admin/FilterBar";
 import { Tabs } from "@/components/ui/Tabs";
 import { Badge } from "@/components/ui/Badge";
 import { SlideOver } from "@/components/admin/SlideOver";
-import { Table, TableHead, TableHeadCell, TableBody, TableRow, TableCell } from "@/components/ui/Table";
+import { Table, TableHeader, TableHead, TableBody, TableRow, TableCell } from "@/components/ui/Table";
 import { formatDate, formatRelative } from "@/lib/utils";
 import type { AppUser } from "@/lib/types";
 
@@ -62,15 +62,15 @@ export default function AdminUsuariosPage() {
 
       <Reveal delay={0.1} className="mt-6">
         <Table>
-          <TableHead>
-            <TableHeadCell>Nome</TableHeadCell>
-            <TableHeadCell>E-mail</TableHeadCell>
-            <TableHeadCell>Plano</TableHeadCell>
-            <TableHeadCell>Projetos</TableHeadCell>
-            <TableHeadCell>Status</TableHeadCell>
-            <TableHeadCell>Última atividade</TableHeadCell>
-            <TableHeadCell>Ações</TableHeadCell>
-          </TableHead>
+          <TableHeader>
+            <TableHead>Nome</TableHead>
+            <TableHead>E-mail</TableHead>
+            <TableHead>Plano</TableHead>
+            <TableHead>Projetos</TableHead>
+            <TableHead>Status</TableHead>
+            <TableHead>Última atividade</TableHead>
+            <TableHead>Ações</TableHead>
+          </TableHeader>
           <TableBody>
             {filtered.map((user) => (
               <TableRow key={user.id} className="cursor-pointer" onClick={() => setSelected(user)}>

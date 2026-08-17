@@ -1,5 +1,7 @@
-import type { ReactNode } from "react";
+import type { ReactNode, HTMLAttributes, ThHTMLAttributes, TdHTMLAttributes } from "react";
 import { cn } from "@/lib/utils";
+
+/** shadcn/ui's Table primitives — semantic table elements, VEYRO borders/type. */
 
 export function Table({ children, className }: { children: ReactNode; className?: string }) {
   return (
@@ -9,29 +11,34 @@ export function Table({ children, className }: { children: ReactNode; className?
   );
 }
 
-export function TableHead({ children }: { children: ReactNode }) {
+export function TableHeader({ children, className, ...props }: HTMLAttributes<HTMLTableSectionElement>) {
   return (
-    <thead>
-      <tr className="border-b border-ink/8">{children}</tr>
+    <thead className={cn("border-b border-ink/8", className)} {...props}>
+      <tr>{children}</tr>
     </thead>
   );
 }
 
-export function TableHeadCell({ children, className }: { children: ReactNode; className?: string }) {
+export function TableHead({ children, className, ...props }: ThHTMLAttributes<HTMLTableCellElement>) {
   return (
     <th
       className={cn(
         "px-5 py-3 text-label font-medium uppercase tracking-[0.06em] text-neutral-500",
         className
       )}
+      {...props}
     >
       {children}
     </th>
   );
 }
 
-export function TableBody({ children }: { children: ReactNode }) {
-  return <tbody>{children}</tbody>;
+export function TableBody({ children, className, ...props }: HTMLAttributes<HTMLTableSectionElement>) {
+  return (
+    <tbody className={className} {...props}>
+      {children}
+    </tbody>
+  );
 }
 
 export function TableRow({
@@ -46,22 +53,14 @@ export function TableRow({
   return (
     <tr
       onClick={onClick}
-      className={cn("border-b border-ink/6 last:border-0 hover:bg-off-white/60 transition-colors", className)}
+      className={cn("border-b border-ink/6 transition-colors last:border-0 hover:bg-off-white/60", className)}
     >
       {children}
     </tr>
   );
 }
 
-export function TableCell({
-  children,
-  className,
-  colSpan,
-}: {
-  children: ReactNode;
-  className?: string;
-  colSpan?: number;
-}) {
+export function TableCell({ children, className, colSpan }: TdHTMLAttributes<HTMLTableCellElement>) {
   return (
     <td colSpan={colSpan} className={cn("px-5 py-4 align-middle text-ink", className)}>
       {children}

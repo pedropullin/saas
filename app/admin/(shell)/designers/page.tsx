@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { designers } from "@/lib/mock/designers";
 import { Reveal } from "@/components/motion/Reveal";
 import { Badge } from "@/components/ui/Badge";
-import { Table, TableHead, TableHeadCell, TableBody, TableRow, TableCell } from "@/components/ui/Table";
+import { Table, TableHeader, TableHead, TableBody, TableRow, TableCell } from "@/components/ui/Table";
 
 export const metadata: Metadata = { title: "Designers — Admin" };
 
@@ -22,14 +22,14 @@ export default function AdminDesignersPage() {
 
       <Reveal delay={0.08} className="mt-8">
         <Table>
-          <TableHead>
-            <TableHeadCell>Nome</TableHeadCell>
-            <TableHeadCell>Especialidade</TableHeadCell>
-            <TableHeadCell>Experiência</TableHeadCell>
-            <TableHeadCell>Projetos</TableHeadCell>
-            <TableHeadCell>Avaliação</TableHeadCell>
-            <TableHeadCell>Disponibilidade</TableHeadCell>
-          </TableHead>
+          <TableHeader>
+            <TableHead>Nome</TableHead>
+            <TableHead>Especialidade</TableHead>
+            <TableHead>Experiência</TableHead>
+            <TableHead>Projetos</TableHead>
+            <TableHead>Avaliação</TableHead>
+            <TableHead>Disponibilidade</TableHead>
+          </TableHeader>
           <TableBody>
             {designers.map((designer) => (
               <TableRow key={designer.id}>

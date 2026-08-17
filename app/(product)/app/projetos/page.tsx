@@ -6,7 +6,7 @@ import { projects } from "@/lib/mock/projects";
 import { Reveal } from "@/components/motion/Reveal";
 import { Tabs } from "@/components/ui/Tabs";
 import { Badge } from "@/components/ui/Badge";
-import { Table, TableHead, TableHeadCell, TableBody, TableRow, TableCell } from "@/components/ui/Table";
+import { Table, TableHeader, TableHead, TableBody, TableRow, TableCell } from "@/components/ui/Table";
 import { formatDate } from "@/lib/utils";
 import type { ProjectStatus } from "@/lib/types";
 
@@ -53,14 +53,14 @@ export default function ProjetosPage() {
 
       <Reveal delay={0.1} className="mt-10">
         <Table>
-          <TableHead>
-            <TableHeadCell>Projeto</TableHeadCell>
-            <TableHeadCell>Responsável</TableHeadCell>
-            <TableHeadCell>Segmento</TableHeadCell>
-            <TableHeadCell>Plano</TableHeadCell>
-            <TableHeadCell>Status</TableHeadCell>
-            <TableHeadCell>Atualizado</TableHeadCell>
-          </TableHead>
+          <TableHeader>
+            <TableHead>Projeto</TableHead>
+            <TableHead>Responsável</TableHead>
+            <TableHead>Segmento</TableHead>
+            <TableHead>Plano</TableHead>
+            <TableHead>Status</TableHead>
+            <TableHead>Atualizado</TableHead>
+          </TableHeader>
           <TableBody>
             {filtered.map((project) => (
               <TableRow key={project.id}>

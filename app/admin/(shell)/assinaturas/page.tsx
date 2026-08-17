@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { users } from "@/lib/mock/users";
 import { Reveal } from "@/components/motion/Reveal";
 import { Badge } from "@/components/ui/Badge";
-import { Table, TableHead, TableHeadCell, TableBody, TableRow, TableCell } from "@/components/ui/Table";
+import { Table, TableHeader, TableHead, TableBody, TableRow, TableCell } from "@/components/ui/Table";
 import { formatCurrency, formatDate } from "@/lib/utils";
 import type { PlanTier } from "@/lib/types";
 
@@ -23,13 +23,13 @@ export default function AdminAssinaturasPage() {
 
       <Reveal delay={0.08} className="mt-8">
         <Table>
-          <TableHead>
-            <TableHeadCell>Usuário</TableHeadCell>
-            <TableHeadCell>Plano</TableHeadCell>
-            <TableHeadCell>Valor mensal</TableHeadCell>
-            <TableHeadCell>Próxima renovação</TableHeadCell>
-            <TableHeadCell>Status</TableHeadCell>
-          </TableHead>
+          <TableHeader>
+            <TableHead>Usuário</TableHead>
+            <TableHead>Plano</TableHead>
+            <TableHead>Valor mensal</TableHead>
+            <TableHead>Próxima renovação</TableHead>
+            <TableHead>Status</TableHead>
+          </TableHeader>
           <TableBody>
             {subscribers.map((user) => (
               <TableRow key={user.id}>

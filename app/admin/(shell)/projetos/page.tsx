@@ -9,7 +9,7 @@ import { FilterBar } from "@/components/admin/FilterBar";
 import { Badge } from "@/components/ui/Badge";
 import { VMark } from "@/components/ui/VMark";
 import { SlideOver } from "@/components/admin/SlideOver";
-import { Table, TableHead, TableHeadCell, TableBody, TableRow, TableCell } from "@/components/ui/Table";
+import { Table, TableHeader, TableHead, TableBody, TableRow, TableCell } from "@/components/ui/Table";
 import { formatDate } from "@/lib/utils";
 import type { Project, ProjectStatus } from "@/lib/types";
 
@@ -55,13 +55,13 @@ export default function AdminProjetosPage() {
 
       <Reveal delay={0.1} className="mt-6">
         <Table>
-          <TableHead>
-            <TableHeadCell>Projeto</TableHeadCell>
-            <TableHeadCell>Responsável</TableHeadCell>
-            <TableHeadCell>Plano</TableHeadCell>
-            <TableHeadCell>Status</TableHeadCell>
-            <TableHeadCell>Data</TableHeadCell>
-          </TableHead>
+          <TableHeader>
+            <TableHead>Projeto</TableHead>
+            <TableHead>Responsável</TableHead>
+            <TableHead>Plano</TableHead>
+            <TableHead>Status</TableHead>
+            <TableHead>Data</TableHead>
+          </TableHeader>
           <TableBody>
             {filtered.map((project) => (
               <TableRow key={project.id} className="cursor-pointer" onClick={() => setSelected(project)}>
