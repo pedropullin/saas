@@ -2,8 +2,10 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
+import { SignOut } from "@phosphor-icons/react";
 import { Wordmark } from "@/components/ui/Wordmark";
 import { VMark } from "@/components/ui/VMark";
+import { NavIcon } from "@/components/ui/nav-icon";
 import { ADMIN_NAV } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import { clearAdminSession } from "@/lib/auth/admin-session";
@@ -34,6 +36,7 @@ export function AdminSidebar() {
                 isActive ? "bg-off-white text-ink" : "text-off-white/60 hover:bg-off-white/10 hover:text-off-white"
               )}
             >
+              <NavIcon name={item.icon} size={16} />
               {item.label}
             </Link>
           );
@@ -46,8 +49,9 @@ export function AdminSidebar() {
           clearAdminSession();
           router.push("/admin/login");
         }}
-        className="mt-auto border-t border-off-white/10 pt-5 text-left text-[0.8125rem] font-medium text-off-white/50 transition-colors hover:text-off-white"
+        className="mt-auto flex items-center gap-2 border-t border-off-white/10 pt-5 text-left text-[0.8125rem] font-medium text-off-white/50 transition-colors hover:text-off-white"
       >
+        <SignOut size={15} weight="regular" />
         Sair
       </button>
     </aside>

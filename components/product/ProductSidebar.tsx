@@ -2,8 +2,10 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { ArrowLeft } from "@phosphor-icons/react";
 import { VMark } from "@/components/ui/VMark";
 import { Wordmark } from "@/components/ui/Wordmark";
+import { NavIcon } from "@/components/ui/nav-icon";
 import { PRODUCT_NAV } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 
@@ -30,6 +32,7 @@ export function ProductSidebar() {
                 isActive ? "bg-ink text-off-white" : "text-neutral-600 hover:bg-ink/5 hover:text-ink"
               )}
             >
+              <NavIcon name={item.icon} size={17} />
               {item.label}
             </Link>
           );
@@ -39,9 +42,10 @@ export function ProductSidebar() {
       <div className="mt-auto space-y-3 border-t border-ink/8 pt-5">
         <Link
           href="/"
-          className="block text-[0.8125rem] font-medium text-neutral-500 transition-colors hover:text-ink"
+          className="flex items-center gap-1.5 text-[0.8125rem] font-medium text-neutral-500 transition-colors hover:text-ink"
         >
-          ← Voltar ao site
+          <ArrowLeft size={14} weight="regular" />
+          Voltar ao site
         </Link>
         <div className="flex items-center gap-2.5 rounded-[4px] bg-paper p-2.5">
           <div className="flex h-8 w-8 items-center justify-center rounded-full bg-accent text-[0.75rem] font-semibold text-accent-ink">

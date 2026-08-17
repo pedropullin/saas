@@ -105,3 +105,31 @@ body {
     cursor: none;
   }
 }
+
+/* Cursor-following spotlight — subtle accent glow, pointer:fine only (no touch cost). */
+.glow-card {
+  position: relative;
+  isolation: isolate;
+}
+.glow-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  opacity: 0;
+  transition: opacity 0.4s var(--ease-editorial);
+  background: radial-gradient(
+    360px circle at var(--glow-x, 50%) var(--glow-y, 50%),
+    color-mix(in srgb, var(--color-accent) 14%, transparent),
+    transparent 70%
+  );
+}
+@media (pointer: fine) {
+  .glow-card:hover::before {
+    opacity: 1;
+  }
+}
+.glow-card > * {
+  position: relative;
+  z-index: 1;
+}

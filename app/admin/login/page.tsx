@@ -7,7 +7,7 @@ export const metadata: Metadata = { title: "VEYRO Admin" };
 
 export default function AdminLoginPage() {
   return (
-    <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-ink px-6">
+    <div className="relative flex min-h-dvh items-center justify-center overflow-hidden bg-ink px-6">
       <VMark
         variant="split"
         size={520}

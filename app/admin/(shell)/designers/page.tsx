@@ -37,7 +37,7 @@ export default function AdminDesignersPage() {
                 <TableCell className="text-neutral-600">{designer.specialty}</TableCell>
                 <TableCell className="text-neutral-600">{designer.experienceYears} anos</TableCell>
                 <TableCell className="text-neutral-600">{designer.projectsCount}</TableCell>
-                <TableCell className="text-neutral-600">★ {designer.rating.toFixed(1)}</TableCell>
+                <TableCell className="text-neutral-600">{designer.rating.toFixed(1)}</TableCell>
                 <TableCell>
                   <Badge tone={AVAILABILITY_TONE[designer.availability]}>{designer.availability}</Badge>
                 </TableCell>

@@ -26,7 +26,7 @@ export function AdminAuthGuard({ children }: { children: ReactNode }) {
 
   if (authorized !== true) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-ink">
+      <div className="flex min-h-dvh items-center justify-center bg-ink">
         <VMark variant="solid" size={32} tone="paper" breathe />
       </div>
     );

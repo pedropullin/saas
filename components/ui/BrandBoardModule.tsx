@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 import { EASE_EDITORIAL } from "@/lib/motion/easing";
+import { usePointerGlow } from "@/hooks/usePointerGlow";
 
 export function BrandBoardModule({
   label,
@@ -25,12 +26,16 @@ export function BrandBoardModule({
     accent: "bg-accent text-accent-ink",
   }[tone];
 
+  const { ref, onPointerMove } = usePointerGlow<HTMLDivElement>();
+
   return (
     <motion.div
+      ref={ref}
+      onPointerMove={onPointerMove}
       whileHover={{ y: -3 }}
       transition={{ duration: 0.25, ease: EASE_EDITORIAL }}
       className={cn(
-        "group relative flex flex-col justify-between overflow-hidden rounded-md border border-ink/8 p-5",
+        "glow-card group flex flex-col justify-between overflow-hidden rounded-md border border-ink/8 p-5",
         span === 2 && "md:col-span-2",
         toneClass,
         className

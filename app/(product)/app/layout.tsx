@@ -4,7 +4,7 @@ import { ProductTopbar } from "@/components/product/ProductTopbar";
 
 export default function ProductLayout({ children }: { children: ReactNode }) {
   return (
-    <div className="flex min-h-screen bg-paper">
+    <div className="flex min-h-dvh bg-paper">
       <ProductSidebar />
       <div className="flex min-w-0 flex-1 flex-col">
         <ProductTopbar />

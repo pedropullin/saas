@@ -1,16 +1,18 @@
 "use client";
 
-import { useMotionValueEvent, useScroll, useTransform } from "framer-motion";
+import { useMotionValueEvent, useScroll, useTransform, type MotionValue } from "framer-motion";
 import { useRef, useState, type RefObject } from "react";
 
 /**
  * Tracks scroll progress of a target section and quantizes it into discrete
  * steps — used to drive the PhoneMockup through the briefing → result
- * sequence as the Hero is scrolled.
+ * sequence as the Hero is scrolled. Also exposes the raw progress value so
+ * callers can derive their own parallax transforms from the same scroll read.
  */
 export function useScrollProgress(stepCount: number): {
   ref: RefObject<HTMLDivElement | null>;
   activeStep: number;
+  scrollYProgress: MotionValue<number>;
 } {
   const ref = useRef<HTMLDivElement>(null);
   const [activeStep, setActiveStep] = useState(0);
@@ -27,5 +29,5 @@ export function useScrollProgress(stepCount: number): {
     setActiveStep((prev) => (prev === next ? prev : next));
   });
 
-  return { ref, activeStep };
+  return { ref, activeStep, scrollYProgress };
 }

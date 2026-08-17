@@ -84,19 +84,16 @@ export function ProcessSteps() {
                       >
                         {item.title}
                       </p>
-                      <AnimatePresence>
-                        {active === index && (
-                          <motion.p
-                            initial={{ opacity: 0, height: 0 }}
-                            animate={{ opacity: 1, height: "auto" }}
-                            exit={{ opacity: 0, height: 0 }}
-                            transition={{ duration: 0.3, ease: EASE_EDITORIAL }}
-                            className="mt-2 max-w-md text-[0.9375rem] text-neutral-600"
-                          >
-                            {item.description}
-                          </motion.p>
-                        )}
-                      </AnimatePresence>
+                      <motion.div
+                        initial={false}
+                        animate={{ gridTemplateRows: active === index ? "1fr" : "0fr", opacity: active === index ? 1 : 0 }}
+                        transition={{ duration: 0.3, ease: EASE_EDITORIAL }}
+                        className="grid overflow-hidden"
+                      >
+                        <p className="mt-2 max-w-md overflow-hidden text-[0.9375rem] text-neutral-600">
+                          {item.description}
+                        </p>
+                      </motion.div>
                     </div>
                   </button>
                 </li>

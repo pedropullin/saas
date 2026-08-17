@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/Badge";
 import { VMark } from "@/components/ui/VMark";
 import { formatRelative } from "@/lib/utils";
 import { EASE_EDITORIAL } from "@/lib/motion/easing";
+import { usePointerGlow } from "@/hooks/usePointerGlow";
 
 const STATUS_LABEL: Record<Project["status"], string> = {
   rascunho: "Rascunho",
@@ -22,13 +23,16 @@ const STATUS_TONE: Record<Project["status"], "neutral" | "outline" | "accent"> =
 
 export function ProjectCard({ project }: { project: Project }) {
   const href = project.identityId ? `/app/identidade/${project.identityId}` : "/app/criar";
+  const { ref, onPointerMove } = usePointerGlow<HTMLDivElement>();
 
   return (
     <Link href={href}>
       <motion.div
+        ref={ref}
+        onPointerMove={onPointerMove}
         whileHover={{ y: -3 }}
         transition={{ duration: 0.25, ease: EASE_EDITORIAL }}
-        className="flex h-full flex-col justify-between rounded-md border border-ink/8 bg-paper p-5"
+        className="glow-card flex h-full flex-col justify-between rounded-md border border-ink/8 bg-paper p-5"
       >
         <div className="flex items-start justify-between">
           <VMark variant="mono" size={22} tone="ink" />

@@ -1,16 +1,23 @@
+"use client";
+
+import { useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/motion/Reveal";
 import { VMark } from "@/components/ui/VMark";
 
 export function Manifesto() {
+  const ref = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
+  const markY = useTransform(scrollYProgress, [0, 1], [-30, 30]);
+
   return (
-    <section id="manifesto" className="relative overflow-hidden py-40 md:py-56">
-      <VMark
-        variant="outline"
-        size={520}
-        tone="ink"
-        className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 opacity-[0.035]"
-      />
+    <section id="manifesto" ref={ref} className="relative overflow-hidden py-40 md:py-56">
+      <div className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+        <motion.div style={{ y: markY }}>
+          <VMark variant="outline" size={520} tone="ink" className="opacity-[0.035]" />
+        </motion.div>
+      </div>
       <Container className="relative max-w-3xl text-center">
         <Reveal>
           <p className="text-label font-medium uppercase tracking-[0.08em] text-neutral-500">

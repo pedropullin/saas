@@ -2,13 +2,16 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
+import { List } from "@phosphor-icons/react";
 import { MARKETING_NAV } from "@/lib/constants";
 import { VMark } from "@/components/ui/VMark";
 import { Wordmark } from "@/components/ui/Wordmark";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
+import { Sheet, SheetTrigger, SheetContent, SheetClose } from "@/components/ui/sheet";
 import { EASE_EDITORIAL } from "@/lib/motion/easing";
+import { cn } from "@/lib/utils";
 
 export function Header() {
   const [scrolled, setScrolled] = useState(false);
@@ -57,61 +60,51 @@ export function Header() {
               Criar minha marca
             </Button>
           </div>
-          <button
-            type="button"
-            aria-label={menuOpen ? "Fechar menu" : "Abrir menu"}
-            aria-expanded={menuOpen}
-            onClick={() => setMenuOpen((v) => !v)}
-            className="flex h-9 w-9 flex-col items-center justify-center gap-[5px] lg:hidden"
-          >
-            <motion.span
-              animate={{ rotate: menuOpen ? 45 : 0, y: menuOpen ? 3 : 0 }}
-              transition={{ duration: 0.25, ease: EASE_EDITORIAL }}
-              className="h-[1.5px] w-5 bg-ink"
-            />
-            <motion.span
-              animate={{ rotate: menuOpen ? -45 : 0, y: menuOpen ? -3 : 0 }}
-              transition={{ duration: 0.25, ease: EASE_EDITORIAL }}
-              className="h-[1.5px] w-5 bg-ink"
-            />
-          </button>
+
+          <Sheet open={menuOpen} onOpenChange={setMenuOpen}>
+            <SheetTrigger asChild>
+              <button
+                type="button"
+                aria-label="Abrir menu"
+                className={cn(
+                  "flex h-9 w-9 items-center justify-center text-ink lg:hidden",
+                  menuOpen && "invisible"
+                )}
+              >
+                <List size={22} weight="regular" />
+              </button>
+            </SheetTrigger>
+            <SheetContent side="top" aria-label="Menu de navegação" className="lg:hidden">
+              <Container className="flex flex-col gap-1 py-8">
+                <div className="mb-4 flex items-center justify-between">
+                  <div className="flex items-center gap-2.5">
+                    <VMark variant="solid" size={20} tone="ink" />
+                    <Wordmark className="text-lg" />
+                  </div>
+                </div>
+                {MARKETING_NAV.map((link) => (
+                  <SheetClose asChild key={link.href}>
+                    <a href={link.href} className="border-t border-ink/6 py-3 text-[0.9375rem] font-medium text-ink first:border-0">
+                      {link.label}
+                    </a>
+                  </SheetClose>
+                ))}
+                <SheetClose asChild>
+                  <Link
+                    href="/app"
+                    className="border-t border-ink/6 py-3 text-[0.9375rem] font-medium text-ink sm:hidden"
+                  >
+                    Entrar
+                  </Link>
+                </SheetClose>
+                <Button href="/app/criar" className="mt-4 w-full sm:hidden">
+                  Criar minha marca
+                </Button>
+              </Container>
+            </SheetContent>
+          </Sheet>
         </div>
       </Container>
-
-      <AnimatePresence>
-        {menuOpen && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.3, ease: EASE_EDITORIAL }}
-            className="overflow-hidden border-t border-ink/8 lg:hidden"
-          >
-            <Container className="flex flex-col gap-1 py-5">
-              {MARKETING_NAV.map((link) => (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  onClick={() => setMenuOpen(false)}
-                  className="py-2.5 text-[0.9375rem] font-medium text-ink"
-                >
-                  {link.label}
-                </a>
-              ))}
-              <Link
-                href="/app"
-                onClick={() => setMenuOpen(false)}
-                className="py-2.5 text-[0.9375rem] font-medium text-ink sm:hidden"
-              >
-                Entrar
-              </Link>
-              <Button href="/app/criar" className="mt-3 w-full sm:hidden">
-                Criar minha marca
-              </Button>
-            </Container>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </motion.header>
   );
 }

@@ -1,12 +1,20 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { DotsThreeVertical, Eye, PencilSimple, ProhibitInset } from "@phosphor-icons/react";
 import { users } from "@/lib/mock/users";
 import { Reveal } from "@/components/motion/Reveal";
 import { FilterBar } from "@/components/admin/FilterBar";
 import { Tabs } from "@/components/ui/Tabs";
 import { Badge } from "@/components/ui/Badge";
 import { Table, TableHead, TableHeadCell, TableBody, TableRow, TableCell } from "@/components/ui/Table";
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+} from "@/components/ui/dropdown-menu";
 import { formatRelative } from "@/lib/utils";
 import type { AppUser } from "@/lib/types";
 
@@ -81,9 +89,32 @@ export default function AdminUsuariosPage() {
                 </TableCell>
                 <TableCell className="text-neutral-500">{formatRelative(user.lastActivityAt)}</TableCell>
                 <TableCell>
-                  <button type="button" className="text-[0.8125rem] font-medium text-neutral-500 hover:text-ink">
-                    Ver detalhes
-                  </button>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <button
+                        type="button"
+                        aria-label="Ações"
+                        className="flex h-7 w-7 items-center justify-center rounded-[4px] text-neutral-500 transition-colors hover:bg-ink/5 hover:text-ink"
+                      >
+                        <DotsThreeVertical size={18} weight="bold" />
+                      </button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end">
+                      <DropdownMenuItem>
+                        <Eye size={15} weight="regular" />
+                        Ver detalhes
+                      </DropdownMenuItem>
+                      <DropdownMenuItem>
+                        <PencilSimple size={15} weight="regular" />
+                        Editar plano
+                      </DropdownMenuItem>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuItem className="data-[highlighted]:bg-red-600">
+                        <ProhibitInset size={15} weight="regular" />
+                        Suspender acesso
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
                 </TableCell>
               </TableRow>
             ))}

@@ -5,6 +5,7 @@ import Link from "next/link";
 import type { Designer } from "@/lib/types";
 import { EASE_EDITORIAL } from "@/lib/motion/easing";
 import { cn } from "@/lib/utils";
+import { usePointerGlow } from "@/hooks/usePointerGlow";
 
 const AVAILABILITY_TONE: Record<Designer["availability"], string> = {
   "disponível": "text-accent-dim",
@@ -13,11 +14,15 @@ const AVAILABILITY_TONE: Record<Designer["availability"], string> = {
 };
 
 export function DesignerCard({ designer }: { designer: Designer }) {
+  const { ref, onPointerMove } = usePointerGlow<HTMLDivElement>();
+
   return (
     <motion.div
+      ref={ref}
+      onPointerMove={onPointerMove}
       whileHover={{ y: -4 }}
       transition={{ duration: 0.25, ease: EASE_EDITORIAL }}
-      className="flex flex-col justify-between rounded-md border border-ink/8 bg-paper p-6"
+      className="glow-card flex flex-col justify-between rounded-md border border-ink/8 bg-paper p-6"
     >
       <div>
         <div className="flex items-start justify-between">
@@ -37,7 +42,7 @@ export function DesignerCard({ designer }: { designer: Designer }) {
       <div className="mt-6 flex items-center justify-between border-t border-ink/6 pt-4 text-[0.75rem] text-neutral-500">
         <span>{designer.experienceYears} anos</span>
         <span>{designer.projectsCount} projetos</span>
-        <span className="font-medium text-ink">★ {designer.rating.toFixed(1)}</span>
+        <span className="font-medium text-ink">{designer.rating.toFixed(1)} avaliação</span>
       </div>
 
       <Link

@@ -1,18 +1,9 @@
-type ClassValue = string | number | null | undefined | false | ClassValue[];
+import { clsx, type ClassValue } from "clsx";
+import { twMerge } from "tailwind-merge";
 
-/** Minimal className combinator — no dependency needed for this project's scale. */
+/** shadcn/ui-standard className combinator — merges Tailwind conflicts (e.g. "p-2 p-4" → "p-4"). */
 export function cn(...values: ClassValue[]): string {
-  const out: string[] = [];
-  for (const value of values) {
-    if (!value) continue;
-    if (Array.isArray(value)) {
-      const nested = cn(...value);
-      if (nested) out.push(nested);
-    } else {
-      out.push(String(value));
-    }
-  }
-  return out.join(" ");
+  return twMerge(clsx(values));
 }
 
 export function formatDate(iso: string): string {

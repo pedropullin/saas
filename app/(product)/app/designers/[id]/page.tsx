@@ -53,7 +53,7 @@ export default async function DesignerDetailPage({ params }: { params: Promise<{
           <p className="text-[0.75rem] text-neutral-500">Projetos entregues</p>
         </div>
         <div>
-          <p className="text-2xl font-medium text-ink">★ {designer.rating.toFixed(1)}</p>
+          <p className="text-2xl font-medium text-ink">{designer.rating.toFixed(1)}</p>
           <p className="text-[0.75rem] text-neutral-500">Avaliação</p>
         </div>
       </Reveal>
