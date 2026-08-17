@@ -23,9 +23,9 @@
   --color-accent-dim: #a3c92c;
   --color-accent-ink: #10230a;
 
-  /* typography */
-  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
-  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+  /* typography — Sora, per the VEYRO brand kit's "suíte tipográfica" */
+  --font-sans: var(--font-sora), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: ui-monospace, "SFMono-Regular", monospace;
 
   --text-display: clamp(2.75rem, 3.2vw + 2rem, 6.25rem);
   --text-display--line-height: 0.98;

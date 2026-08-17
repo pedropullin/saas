@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
-import { GeistSans } from "geist/font/sans";
-import { GeistMono } from "geist/font/mono";
+import { Sora } from "next/font/google";
 import { MotionConfig } from "framer-motion";
 import { TransitionProvider } from "@/components/providers/TransitionProvider";
 import { LoadingIntro } from "@/components/experience/LoadingIntro";
@@ -16,13 +15,20 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://veyro.app"),
 };
 
+const sora = Sora({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800"],
+  variable: "--font-sora",
+  display: "swap",
+});
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pt-BR" className={`${GeistSans.variable} ${GeistMono.variable}`}>
+    <html lang="pt-BR" className={sora.variable}>
       <body>
         <MotionConfig reducedMotion="user">
           <TransitionProvider>

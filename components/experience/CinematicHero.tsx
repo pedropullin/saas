@@ -11,6 +11,7 @@ import {
   useMotionValueEvent,
   type MotionValue,
 } from "framer-motion";
+import { ArrowRight } from "lucide-react";
 import { VBars } from "./VBars";
 import { PhoneMockup } from "@/components/ui/PhoneMockup";
 import { Magnetic } from "@/components/ui/Magnetic";
@@ -18,7 +19,8 @@ import { TransitionLink } from "@/components/providers/TransitionLink";
 import { EASE_EDITORIAL } from "@/lib/motion/easing";
 import { mapRange, mapRangeUnit } from "@/lib/motion/mapRange";
 
-const MORPH_WORDS = ["marcas", "sistemas", "identidades", "produtos", "presença"];
+const MORPH_WORDS = ["inteligência", "precisão", "velocidade", "consistência", "escala"];
+const SEGMENT_TAGS = ["Arquitetura", "Moda", "Tecnologia", "Design", "Alimentação"];
 
 /**
  * Isolated in its own component so the `phoneStep` state tick (which forces
@@ -98,9 +100,9 @@ export function CinematicHero() {
   const vRotateContainer = useTransform(scrollYProgress, (v) => mapRange(v, [0, 1], [0, 16]));
 
   // ---- scroll-driven wordmark relocation ----------------------------------
-  const wordX = useTransform(scrollYProgress, (v) => mapRangeUnit(v, [0, 0.55], ["0%", "-30%"]));
-  const wordY = useTransform(scrollYProgress, (v) => mapRangeUnit(v, [0, 0.55], ["0%", "-34%"]));
-  const wordScale = useTransform(scrollYProgress, (v) => mapRange(v, [0, 0.55], [1, 0.4]));
+  const wordX = useTransform(scrollYProgress, (v) => mapRangeUnit(v, [0, 0.55], ["0%", "128%"]));
+  const wordY = useTransform(scrollYProgress, (v) => mapRangeUnit(v, [0, 0.55], ["0%", "-92%"]));
+  const wordScale = useTransform(scrollYProgress, (v) => mapRange(v, [0, 0.55], [1, 0.26]));
 
   // ---- scroll-driven headline reveal --------------------------------------
   const headlineOpacity = useTransform(scrollYProgress, (v) => mapRange(v, [0.28, 0.48], [0, 1]));
@@ -163,13 +165,11 @@ export function CinematicHero() {
 
         {/* headline */}
         <motion.div
-          className="absolute left-6 top-[58%] max-w-xl md:left-16 md:px-0"
+          className="absolute left-6 top-[38%] max-w-2xl md:left-16 md:px-0"
           style={{ opacity: headlineOpacity, y: headlineY }}
         >
-          <p className="text-display font-medium leading-[1.02] tracking-[-0.03em] text-off-white">
-            A próxima geração
-            <br />
-            de criação de{" "}
+          <p className="text-h1 font-semibold leading-[1.05] tracking-[-0.03em] text-off-white">
+            Crie marcas extraordinárias com{" "}
             <span
               className="relative inline-block overflow-hidden align-bottom"
               data-cursor="v"
@@ -192,15 +192,44 @@ export function CinematicHero() {
             </span>
             .
           </p>
-          <Magnetic className="mt-9 inline-block">
-            <TransitionLink
-              href="/app/criar"
-              data-cursor="v"
-              className="inline-flex items-center gap-3 rounded-[3px] bg-off-white px-7 py-3.5 text-[0.9375rem] font-medium text-ink transition-colors hover:bg-accent"
-            >
-              Criar minha marca
-            </TransitionLink>
-          </Magnetic>
+          <p className="mt-4 max-w-md text-body-lg text-off-white/60">
+            Do briefing à marca completa. A VEYRO transforma uma ideia simples em uma identidade
+            visual pronta para o mundo — em minutos.
+          </p>
+
+          <div className="mt-6 flex flex-wrap items-center gap-3">
+            <Magnetic>
+              <TransitionLink
+                href="/app/criar"
+                data-cursor="v"
+                className="inline-flex items-center gap-2 rounded-full bg-accent px-6 py-3.5 text-[0.9375rem] font-semibold text-accent-ink transition-transform hover:scale-[1.03]"
+              >
+                Começar
+                <ArrowRight className="h-4 w-4" />
+              </TransitionLink>
+            </Magnetic>
+            <Magnetic>
+              <a
+                href="#produto"
+                data-cursor="v"
+                className="inline-flex items-center gap-2 rounded-full border border-off-white/25 px-6 py-3.5 text-[0.9375rem] font-semibold text-off-white transition-colors hover:border-off-white/60"
+              >
+                Saber mais
+                <ArrowRight className="h-4 w-4" />
+              </a>
+            </Magnetic>
+          </div>
+
+          <div className="mt-5 flex flex-wrap items-center gap-2">
+            {SEGMENT_TAGS.map((tag) => (
+              <span
+                key={tag}
+                className="rounded-full border border-off-white/15 px-3.5 py-1.5 text-[0.75rem] font-medium text-off-white/50"
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
         </motion.div>
 
         {/* phone, arrives as the story turns toward product */}
