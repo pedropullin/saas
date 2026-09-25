@@ -1,135 +1,163 @@
 @import "tailwindcss";
 
-/* ------------------------------------------------------------------ */
-/* VEYRO design tokens                                                 */
-/* Preto profundo / branco / off-white / cinza neutro + 1 accent lima  */
-/* ------------------------------------------------------------------ */
 @theme {
-  /* color */
-  --color-ink: #0a0a09;
-  --color-ink-soft: #17170f;
-  --color-paper: #ffffff;
-  --color-off-white: #f5f4ef;
-  --color-neutral-100: #ececE5;
-  --color-neutral-200: #e0dfd7;
-  --color-neutral-300: #cccbc0;
-  --color-neutral-400: #a8a79b;
-  --color-neutral-500: #86857a;
-  --color-neutral-600: #5f5e54;
-  --color-neutral-700: #403f38;
-  --color-neutral-800: #262620;
-  --color-accent: #c6f13a;
-  --color-accent-dim: #a3c92c;
-  --color-accent-ink: #10230a;
+  --color-ink: #070707;
+  --color-ink-2: #0e0e0e;
+  --color-ink-3: #151515;
+  --color-ink-4: #1d1d1d;
+  --color-line: #252525;
+  --color-line-2: #343434;
+  --color-paper: #f7f7f5;
+  --color-mute: #8c8c8c;
+  --color-mute-2: #b9b9b6;
+  --color-brand: #ff2e2e;
+  --color-brand-strong: #e01818;
+  --color-brand-deep: #7a0b0b;
 
-  /* typography */
   --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, monospace;
 
-  --text-display: clamp(2.75rem, 3.2vw + 2rem, 6.25rem);
-  --text-display--line-height: 0.98;
-  --text-display--letter-spacing: -0.03em;
-  --text-h1: clamp(2.25rem, 2vw + 1.75rem, 4rem);
-  --text-h1--line-height: 1.04;
-  --text-h1--letter-spacing: -0.025em;
-  --text-h2: clamp(1.75rem, 1.1vw + 1.4rem, 2.75rem);
-  --text-h2--line-height: 1.1;
-  --text-h2--letter-spacing: -0.02em;
-  --text-h3: 1.375rem;
-  --text-h3--line-height: 1.25;
-  --text-h3--letter-spacing: -0.01em;
-  --text-body-lg: 1.125rem;
-  --text-body-lg--line-height: 1.6;
-  --text-body: 1rem;
-  --text-body--line-height: 1.6;
-  --text-caption: 0.8125rem;
-  --text-caption--line-height: 1.4;
-  --text-label: 0.75rem;
-  --text-label--line-height: 1.2;
-  --text-label--letter-spacing: 0.08em;
+  --animate-ping-slow: ping-slow 2.4s cubic-bezier(0, 0, 0.2, 1) infinite;
+  --animate-fade-up: fade-up 0.5s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  --animate-slide-in: slide-in 0.28s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  --animate-scan: scan 6s linear infinite;
+  --animate-marquee: marquee 45s linear infinite;
 
-  /* radius / shadow */
-  --radius-xs: 3px;
-  --radius-sm: 6px;
-  --radius-md: 12px;
-  --shadow-subtle: 0 1px 2px rgba(10, 10, 9, 0.04), 0 6px 16px rgba(10, 10, 9, 0.04);
-  --shadow-lifted: 0 2px 4px rgba(10, 10, 9, 0.06), 0 16px 32px rgba(10, 10, 9, 0.08);
-
-  /* container */
-  --container-page: 1360px;
-}
-
-/* Tailwind 4 auto-detects content; this is a static-export capable app so
-   no extra content globs are required. */
-
-html {
-  scroll-behavior: smooth;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
+  @keyframes ping-slow {
+    0% { transform: scale(1); opacity: 0.7; }
+    80%, 100% { transform: scale(3.2); opacity: 0; }
+  }
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes slide-in {
+    from { opacity: 0; transform: translateX(24px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  @keyframes scan {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
   }
 }
 
+:root {
+  color-scheme: dark;
+}
+
+html {
+  background: var(--color-ink);
+}
+
 body {
-  background: var(--color-off-white);
-  color: var(--color-ink);
+  background: var(--color-ink);
+  color: var(--color-paper);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
 }
 
 ::selection {
-  background: var(--color-accent);
-  color: var(--color-accent-ink);
+  background: var(--color-brand);
+  color: #fff;
 }
 
-/* Focus ring: visible, on-brand, never removed for a11y */
 :focus-visible {
-  outline: 2px solid var(--color-accent);
+  outline: 2px solid var(--color-brand);
   outline-offset: 2px;
 }
 
-.no-scrollbar::-webkit-scrollbar {
-  display: none;
-}
-.no-scrollbar {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #2e2e2e transparent;
 }
 
-/* Custom cursor: only enabled on marketing pages with pointer:fine */
-@media (pointer: fine) {
-  [data-cursor-zone] {
-    cursor: none;
-  }
+/* Grade de mapa usada no hero e no mapa esquemático */
+.map-grid {
+  background-color: #0a0a0a;
+  background-image:
+    radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.09) 1px, transparent 0),
+    linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+  background-size: 22px 22px, 110px 110px, 110px 110px;
 }
 
-/* Cursor-following spotlight — subtle accent glow, pointer:fine only (no touch cost). */
-.glow-card {
-  position: relative;
-  isolation: isolate;
-}
-.glow-card::before {
-  content: "";
+/* Pins do mapa (Google Maps e esquemático) */
+.pin {
   position: absolute;
-  inset: 0;
-  z-index: 0;
-  opacity: 0;
-  transition: opacity 0.4s var(--ease-editorial);
-  background: radial-gradient(
-    360px circle at var(--glow-x, 50%) var(--glow-y, 50%),
-    color-mix(in srgb, var(--color-accent) 14%, transparent),
-    transparent 70%
-  );
-}
-@media (pointer: fine) {
-  .glow-card:hover::before {
-    opacity: 1;
-  }
-}
-.glow-card > * {
-  position: relative;
+  /* rotação explícita em todos os estados (o compilador funde rotate + transform) */
+  transform: translate(-50%, -100%) rotate(-45deg);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  min-width: 26px;
+  height: 26px;
+  padding: 0 6px;
+  border-radius: 999px 999px 999px 2px;
+  background: var(--color-brand);
+  border: 2px solid #0a0a0a;
+  box-shadow: 0 6px 18px rgba(255, 46, 46, 0.35);
+  transition: transform 0.15s ease, background 0.15s ease;
   z-index: 1;
+}
+.pin > span {
+  transform: rotate(45deg);
+  font: 700 11px/1 var(--font-sans);
+  color: #fff;
+  font-variant-numeric: tabular-nums;
+}
+.pin:hover {
+  transform: translate(-50%, -100%) rotate(-45deg) scale(1.15);
+  z-index: 3;
+}
+.pin[data-active="true"] {
+  background: #fff;
+  transform: translate(-50%, -100%) rotate(-45deg) scale(1.3);
+  z-index: 4;
+  box-shadow: 0 0 0 6px rgba(255, 46, 46, 0.35), 0 8px 24px rgba(0, 0, 0, 0.6);
+}
+.pin[data-active="true"] > span {
+  color: #0a0a0a;
+}
+.pin[data-saved="true"]:not([data-active="true"]) {
+  background: #0a0a0a;
+  border-color: var(--color-brand);
+}
+
+.you-dot {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  transform: translate(-50%, -50%);
+  border-radius: 999px;
+  background: #fff;
+  border: 3px solid var(--color-brand);
+  box-shadow: 0 0 0 8px rgba(255, 255, 255, 0.08);
+}
+
+/* Google Maps no tema escuro */
+.gm-style .gm-style-cc,
+.gm-style-cc a {
+  filter: invert(0.9);
+}
+.gm-style button.gm-control-active {
+  background: #111 !important;
+}
+.gm-style button.gm-control-active img {
+  filter: invert(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
 }
