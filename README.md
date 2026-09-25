@@ -1,102 +1,116 @@
-# prospecta.ai
+# Prospecta.ai
 
-Site de prospecção B2B para você e seus amigos. Busque empresas de qualquer lugar do mundo no Google Maps, veja nota e avaliações, filtre quem não tem site e chame no WhatsApp ou ligue em um clique.
+Plataforma SaaS de prospecção B2B. Encontre empresas em qualquer lugar do mundo com dados oficiais do Google Maps, veja contatos e avaliações, e fale com o dono pelo WhatsApp ou por ligação em poucos cliques.
 
-Visual preto, branco e vermelho. Feito com Next.js 16, React 19 e Tailwind 4.
+**Fluxo principal:** Pesquisar → Filtrar → Encontrar empresa → Ver dados → WhatsApp/Ligar → Salvar lead.
 
-## O que tem
-
-- **Busca global** por segmento e local ("dentistas" em "Recife"), perto de mim com raio, ou várias regiões de uma vez separadas por `;`.
-- **WhatsApp em um clique** com mensagem pronta e personalizada com os dados da empresa.
-- **Ligação direta** pelo `tel:`.
-- **Avaliações**: nota, número de avaliações, comentários recentes e horário de funcionamento.
-- **Filtros**: com WhatsApp, sem site, nota mínima, mínimo de avaliações, aberto agora, com telefone.
-- **Mapa** com pins numerados ligados à lista.
-- **Minha lista**: funil com status (Novo, Contatado, Respondeu, Negociando, Fechado, Perdido), anotações e quem adicionou.
-- **Exportar CSV** dos resultados ou da lista, e backup em JSON para trocar listas entre amigos.
-- **Acesso por código**: cada amigo entra com o próprio nome e um código que você define.
-- **Modo demonstração** automático quando não há chave do Google, com empresas fictícias e contato bloqueado.
+Next.js 16 (App Router), React 19, Tailwind 4, Drizzle ORM com Postgres, autenticação própria, Google Places API (New) e Maps JavaScript API.
 
 ## Rodar localmente
 
 ```bash
 npm install
-cp .env.example .env.local   # preencha as chaves (ou deixe vazio para o modo demonstração)
+cp .env.example .env.local   # pode deixar tudo vazio para começar
 npm run dev                  # http://localhost:3000
 ```
 
-Outros comandos:
+Sem nenhuma variável configurada, o app funciona de ponta a ponta:
+
+- **Banco:** PGlite, um Postgres embutido salvo em `.data/pglite`. As migrações rodam sozinhas.
+- **Empresas:** modo demonstração, com empresas fictícias marcadas como `DEMO` e contato bloqueado.
+- **Mapa:** mapa esquemático no lugar do Google Maps.
+
+Crie uma conta em `/cadastro` e faça uma pesquisa.
 
 ```bash
-npm run build      # build de produção
-npm run lint       # ESLint
-npm run typecheck  # TypeScript
-npm test           # testes (Vitest)
+npm test           # 43 testes (Vitest), incluindo isolamento de dados entre contas
+npm run lint
+npm run typecheck
+npm run build
 ```
 
-## Configurar o Google Maps
+## Colocar em produção
 
-1. Crie um projeto em [console.cloud.google.com](https://console.cloud.google.com) e ative o faturamento.
-2. Em **APIs e serviços → Biblioteca**, ative **Places API (New)** e **Maps JavaScript API**.
-3. Crie **duas chaves** em **Credenciais**:
-   - **Chave de servidor** (`GOOGLE_MAPS_API_KEY`). Restrinja a API a *Places API (New)*. Ela nunca vai para o navegador.
-   - **Chave de navegador** (`GOOGLE_MAPS_BROWSER_KEY`). Restrinja por *Referenciadores HTTP* ao seu domínio (ex.: `https://seusite.vercel.app/*`) e a API a *Maps JavaScript API*.
-4. Coloque as chaves no `.env.local` ou nas variáveis de ambiente da hospedagem.
+1. **Banco:** crie um Postgres (Supabase, Neon ou outro) e defina `DATABASE_URL`. No Supabase, use a string de conexão do pooler.
+2. **Google Cloud:** ative a **Places API (New)** e a **Maps JavaScript API** e crie duas chaves.
+   - `GOOGLE_MAPS_API_KEY` é a chave de servidor. Restrinja a API à Places API (New).
+   - `GOOGLE_MAPS_BROWSER_KEY` é a chave de navegador. Restrinja por referenciador HTTP ao seu domínio e à Maps JavaScript API.
+3. **Vercel:** importe o repositório, configure as variáveis do `.env.example` e faça o deploy. As migrações rodam na primeira requisição, protegidas por lock.
 
-Sem a chave de servidor, o site roda em modo demonstração. Sem a chave de navegador, a busca funciona com dados reais, mas o mapa vira um mapa esquemático e cada empresa continua com o botão "Google Maps".
+Para rodar as migrações manualmente:
 
-**Custo.** Cada busca e cada abertura de detalhes é cobrada pelo Google. Telefone, site e nota caem na faixa *Enterprise* da Places API, e as avaliações na faixa *Enterprise + Atmosphere*. Confira a [tabela de preços](https://developers.google.com/maps/billing-and-pricing/pricing) e defina limites de cota no Google Cloud.
+```bash
+DATABASE_URL=postgres://... DB_AUTO_MIGRATE=false npm run db:migrate
+```
 
-## Variáveis de ambiente
+## O que a plataforma faz
 
-| Variável | Para quê |
+| Área | Recursos |
 | --- | --- |
-| `GOOGLE_MAPS_API_KEY` | Buscas e detalhes na Places API (New), só no servidor. |
-| `GOOGLE_MAPS_BROWSER_KEY` | Desenhar o Google Maps no navegador. |
-| `PROSPECTA_ACCESS_CODES` | Códigos de acesso separados por vírgula, ex.: `lobo-vermelho,time2026`. |
-| `PROSPECTA_SESSION_SECRET` | Segredo que assina o cookie de sessão. Gere com `openssl rand -hex 32`. |
+| Prospectar | Texto livre (“Empresas sem site em Curitiba”), categoria, país, estado, cidade, bairro, CEP, raio em km, busca mundial e varredura de área |
+| Filtros | Possui ou não site, WhatsApp, telefone, Instagram, Facebook, e-mail, aberto agora, nota mínima e máxima, mínimo de avaliações |
+| Resultados | Lista e mapa lado a lado, seleção múltipla, ações em massa, exportação CSV e “carregar mais” |
+| Empresa | Fotos, contatos, redes, horário, avaliações, mapa, “Informações para prospecção” e análise de oportunidade |
+| Prospectar (ações rápidas) | WhatsApp com mensagem pronta, Ligar, abrir Instagram ou site, copiar telefone ou dados, observações |
+| Leads | Kanban com arrastar e soltar em 6 etapas, tabela, responsável, tags, linha do tempo, importação e exportação CSV |
+| Listas e Favoritos | Listas da equipe e favoritos pessoais |
+| Histórico | Pesquisas pessoais, com “Repetir” que restaura todos os filtros |
+| Mapa | Tela cheia, raio ajustável e cartão ao clicar no marcador |
+| Dashboard | Empresas encontradas, salvas, leads, contatados, negociação, clientes, taxa de contato, gráficos de 30 dias e funil |
+| Equipe | Convite por link de uso único, papéis (dono, administrador, membro), leads atribuídos e convertidos, atividade |
+| Planos | Free, Pro e Business com limites aplicados no servidor. Nesta versão, sem cobrança |
 
-**Proteja o acesso antes de publicar.** Com `PROSPECTA_ACCESS_CODES` vazio, qualquer pessoa com o link usa a sua cota do Google.
+## Dados: de onde vêm e o que não é inventado
 
-## Publicar na Vercel
+- **Empresas, telefone, site, nota, avaliações, horário e fotos** vêm da Google Places API (New).
+- **E-mail, Instagram, Facebook, LinkedIn e WhatsApp publicados no site** são lidos da página inicial e da página de contato de cada empresa. A leitura bloqueia endereços de rede interna (proteção contra SSRF) e fica em cache por 14 dias.
+- **WhatsApp:** o Google não informa quem tem. Um link `wa.me` publicado pela empresa conta como confirmado, um celular como provável, e um fixo como incerto.
+- **Quando um dado não existe**, a interface mostra “Não encontrado”. E-mail e redes de uma empresa com site ainda não lido aparecem como “Verificando…”.
+- **Empresa verificada** e **ordenar por mais recentes** aparecem desativados. A API oficial do Google não fornece esses dados.
+- **Análise de oportunidade:** regras simples sobre os dados encontrados (site, contato, nota, avaliações, redes). Nenhum dado é estimado.
 
-1. Importe este repositório em [vercel.com/new](https://vercel.com/new).
-2. Adicione as quatro variáveis de ambiente acima.
-3. Faça o deploy e adicione o domínio da Vercel na restrição da chave de navegador.
+## Segurança
 
-## Como o WhatsApp é detectado
+- **Senhas:** scrypt com salt. Sessões guardam no banco só o hash SHA-256 do token do cookie, que é httpOnly, `SameSite=Lax` e `Secure` em produção.
+- **Autorização:** toda página, Server Action e rota de API valida a sessão no banco. Rotas de API recusam requisições de outra origem.
+- **Isolamento:** todo dado de negócio tem `org_id`, e todas as consultas filtram por ele. Leads, listas e notas são compartilhados só dentro da equipe. Favoritos, histórico e configurações são pessoais. Os testes em `src/server/isolation.test.ts` cobrem isso.
+- **Limite de tentativas:** login e cadastro têm limite por IP e por e-mail, guardado no banco.
+- **Uso da cota:** o limite de pesquisas do plano é contado no servidor, antes de chamar o Google.
 
-O Google não informa se um número tem WhatsApp. O Prospecta classifica assim:
-
-| Situação | Selo | Botão |
-| --- | --- | --- |
-| A empresa cadastrou um link `wa.me` ou `api.whatsapp.com` como site | WhatsApp confirmado | WhatsApp |
-| O telefone é de celular | Celular · provável WhatsApp | WhatsApp |
-| O telefone é fixo | Telefone fixo | Tentar WhatsApp |
-
-O tipo de linha vem da biblioteca `libphonenumber-js` e funciona para números de qualquer país. Quem você chama no WhatsApp ou por ligação entra na lista como "Contatado".
-
-## Limites e cuidados
-
-- O Google entrega **até 60 empresas por busca**, em páginas de 20. Para cobrir uma cidade inteira, busque por bairro: `Moema; Pinheiros; Tatuapé`.
-- A lista de leads fica **no navegador** de cada pessoa. Para juntar listas, use "Backup para amigo" e "Importar".
-- Os [termos da Google Maps Platform](https://cloud.google.com/maps-platform/terms) restringem guardar dados do Places por muito tempo. A lista guarda uma cópia dos dados da empresa para funcionar offline. Se isso for um problema para o seu uso, guarde só o ID do lugar e recarregue os detalhes ao abrir.
-- Pelos mesmos termos, dados do Places só podem aparecer em mapa do Google. Por isso o mapa real usa a Maps JavaScript API.
-- Respeite quem pedir para não ser contatado e as regras da LGPD para comunicação comercial.
-
-## Estrutura
+## Arquitetura
 
 ```
-app/
-  page.tsx                 landing page
-  entrar/                  login com nome + código
-  (app)/prospectar/        busca, filtros, lista e mapa
-  (app)/lista/             funil de leads
-  api/places/search        Places API: Text Search (New)
-  api/places/[id]          Places API: Place Details (New)
-  api/auth/                login e logout
-proxy.ts                   protege /prospectar, /lista e /api/places
-components/app/            interface do app
-components/landing/        landing e login
-lib/                       Google Places, telefone/WhatsApp, sessão, filtros, CSV, lista
+src/
+  app/                 páginas (landing, auth, /app/*) e rotas de API
+  components/          interface por área: prospect, maps, company, leads, lists, team, settings, shell, ui
+  client/              estado do navegador: busca compartilhada, ações de empresa, toasts
+  lib/                 regras puras e compartilhadas: tipos, filtros, contatos, oportunidade, planos, CSV
+  server/
+    db/                esquema Drizzle e conexão (Postgres ou PGlite)
+    auth/              senhas, sessões, contas, convites, limite de tentativas
+    places/            provedores de lugares (Google e demonstração), geocodificação, motor de busca
+    enrichment/        leitura segura dos sites das empresas
+    companies/ leads/ lists/ favorites/ history/
+    billing/           planos, uso mensal e provedor de pagamento (modo teste)
+    analytics/ team/ notifications/ activity/ settings/
+drizzle/               migrações SQL
 ```
+
+Para trocar ou somar uma fonte de empresas, implemente a interface `PlacesProvider` em `src/server/places/provider.ts`.
+
+## Cobrança (próximo passo)
+
+A interface de planos está pronta e os limites já são aplicados. Para cobrar de verdade, implemente um provedor de pagamento com o contrato `BillingProvider` em `src/server/billing/provider.ts`. Ele pode ser Stripe Checkout, Pagar.me ou Mercado Pago. Crie também um webhook que atualize `organizations.plan`. Até lá, `BILLING_MODE=test` aplica a troca de plano na hora.
+
+## Custos e termos do Google
+
+- Cada pesquisa, página extra, detalhe de empresa e foto é cobrado pelo Google. Telefone, site e nota caem na faixa Enterprise da Places API. Veja a [tabela de preços](https://developers.google.com/maps/billing-and-pricing/pricing) e defina cotas no Google Cloud.
+- Os detalhes de uma empresa ficam 10 minutos em memória para evitar cobrança repetida.
+- Os [termos da Google Maps Platform](https://cloud.google.com/maps-platform/terms) limitam guardar dados do Places. O app guarda uma cópia dos dados das empresas que você salva como lead, lista ou favorito, e a renova quando você abre a empresa. Coordenadas de áreas pesquisadas ficam no máximo 30 dias. Avalie essa política para o seu uso.
+- Dados do Places só aparecem em mapa do Google. Sem a chave de navegador, o app mostra um mapa esquemático, sem base cartográfica.
+
+## Limitações conhecidas
+
+- O Google entrega até 60 empresas por pesquisa. A varredura (2×2 no Pro, 3×3 no Business) divide a área para ir além.
+- Não há recuperação de senha por e-mail, porque o app ainda não envia e-mails. Um administrador pode remover o membro e convidar de novo.
+- Com PGlite, os dados ficam no disco da máquina. Em hospedagem serverless, use `DATABASE_URL`.

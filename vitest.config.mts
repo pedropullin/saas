@@ -3,10 +3,16 @@ import { defineConfig } from "vitest/config";
 
 export default defineConfig({
   resolve: {
-    alias: { "@": fileURLToPath(new URL("./", import.meta.url)) },
+    alias: {
+      "server-only": fileURLToPath(new URL("./src/test/empty.ts", import.meta.url)),
+      "@": fileURLToPath(new URL("./src/", import.meta.url)),
+    },
   },
   test: {
-    include: ["lib/**/*.test.ts"],
+    include: ["src/**/*.test.ts"],
     environment: "node",
+    env: { PGLITE_DATA_DIR: "memory://", NODE_ENV: "test" },
+    testTimeout: 20_000,
+    hookTimeout: 30_000,
   },
 });
