@@ -37,6 +37,8 @@ npm run build
    - `GOOGLE_MAPS_BROWSER_KEY` é a chave de navegador. Restrinja por referenciador HTTP ao seu domínio e à Maps JavaScript API.
 3. **Vercel:** importe o repositório, configure as variáveis do `.env.example` e faça o deploy. As migrações rodam na primeira requisição, protegidas por lock.
 
+**Supabase na Vercel.** Use o pooler em modo transação (porta 6543) na `DATABASE_URL` e defina `DB_AUTO_MIGRATE=false`. O lock de migração não funciona nesse modo. Rode as migrações pela porta 5432, a do modo sessão. O banco de produção usa um usuário próprio (`prospecta_app`), dono das tabelas. Todas as tabelas têm RLS ligado e nenhuma política, então a API pública do Supabase (`anon` e `authenticated`) não lê nem grava nada.
+
 Para rodar as migrações manualmente:
 
 ```bash
